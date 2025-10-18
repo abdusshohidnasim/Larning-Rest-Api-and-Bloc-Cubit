@@ -26,8 +26,7 @@ class ApiPhotoPage extends StatefulWidget {
 }
 
 class _ApiPhotoPageState extends State<ApiPhotoPage> {
-
-  // ✅ Fetch data from API with User-Agent header
+  // Fetch data from API with User-Agent header
   Future<List<Photo>> fetchPhotos() async {
     const String baseUrl = "https://jsonplaceholder.typicode.com/photos";
 
@@ -35,7 +34,7 @@ class _ApiPhotoPageState extends State<ApiPhotoPage> {
       final response = await http.get(
         Uri.parse(baseUrl),
         headers: {
-          "User-Agent": "Mozilla/5.0", // Important for Linux/Desktop
+          "User-Agent": "Mozilla/5.0",
           "Accept": "application/json",
         },
       );
@@ -66,22 +65,20 @@ class _ApiPhotoPageState extends State<ApiPhotoPage> {
       body: FutureBuilder<List<Photo>>(
         future: fetchPhotos(),
         builder: (context, snapshot) {
-          // Loading state
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          // Error state
           if (snapshot.hasError) {
             return Center(
-                child: Text(
-                  "Something went wrong!\n${snapshot.error}",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.red, fontSize: 18),
-                ));
+              child: Text(
+                "Something went wrong!\n${snapshot.error}",
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.red, fontSize: 18),
+              ),
+            );
           }
 
-          // No data state
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(
               child: Text(
@@ -91,7 +88,6 @@ class _ApiPhotoPageState extends State<ApiPhotoPage> {
             );
           }
 
-          // Success state
           var photos = snapshot.data!;
 
           return ListView.builder(
@@ -104,13 +100,13 @@ class _ApiPhotoPageState extends State<ApiPhotoPage> {
                     borderRadius: BorderRadius.circular(12)),
                 child: ListTile(
                   leading: CircleAvatar(
-
-                    child: Image.network(
-                      photos[index].url,
-                      width: 60,
-                      height: 60,
-                      fit: BoxFit.cover,
-                    ),
+                    radius: 30,
+                    backgroundColor: Colors.grey[300],
+                    backgroundImage: NetworkImage(photos[index].url),
+                    onBackgroundImageError: (_, __) {
+                      // Fallback if image fails
+                      print("Image failed to load: ${photos[index].url}");
+                    },
                   ),
                   title: Text(
                     photos[index].title,
@@ -129,10 +125,7 @@ class _ApiPhotoPageState extends State<ApiPhotoPage> {
   }
 }
 
-// ----------------------
-// JSON Parsing Functions
-// ----------------------
-
+// JSON Parsing
 List<Photo> photoFromJson(String str) =>
     List<Photo>.from(json.decode(str).map((x) => Photo.fromJson(x)));
 
