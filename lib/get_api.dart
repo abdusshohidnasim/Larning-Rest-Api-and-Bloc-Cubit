@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:larning_rest_api_and_statemanagment/Model/Get_Api_Model/model.dart';
+
+import 'GetMathod/Model/Get_Api_Model/model.dart';
 
 void main() {
   runApp(Myapp());

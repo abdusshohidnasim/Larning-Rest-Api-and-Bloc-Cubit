@@ -87,9 +87,7 @@ class _ApiPhotoPageState extends State<ApiPhotoPage> {
               ),
             );
           }
-
           var photos = snapshot.data!;
-
           return ListView.builder(
             itemCount: photos.length,
             itemBuilder: (context, index) {
