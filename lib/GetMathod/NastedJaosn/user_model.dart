@@ -8,7 +8,6 @@ class UserModel {
       this.phone, 
       this.website, 
       this.company,});
-
   UserModel.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
