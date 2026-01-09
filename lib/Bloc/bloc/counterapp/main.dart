@@ -17,10 +17,10 @@ class Myapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: MultiBlocProvider(providers: [
+        home: MultiBlocProvider(
+            providers: [
           BlocProvider<CounterBloc>(create: (context)=>CounterBloc())
         ], child: MyHomePage())
-
     );
   }
 }

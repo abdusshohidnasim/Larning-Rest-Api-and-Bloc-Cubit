@@ -13,7 +13,6 @@ class Getapi {
   int id;
   String title;
   String body;
-
   Getapi({
     required this.userId,
     required this.id,
